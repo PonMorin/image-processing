@@ -15,7 +15,6 @@ def make_noise(images):
         images[y_coord][x_coord] = 255
 
     number_of_black_pixel = int(density_pepper * (images.shape[0] * images.shape[1]))
-
     for i in range(number_of_black_pixel):
         y_coord = random.randint(0, images.shape[0] - 1)
         x_coord = random.randint(0, images.shape[1] - 1)

@@ -3,22 +3,20 @@ import numpy as np
 
 # Load the original image and adjusted image
 original_image = cv2.imread('image-processing/Classwork#3/cat.jpg')# Replace with the path to the original image
-adjusted_image = cv2.imread('image-processing/Classwork#3/cat.jpg')  # Replace with the path to the adjusted image
+adjusted_image = cv2.imread('image-processing/Classwork#3/sp.png')  # Replace with the path to the adjusted image
 
-# Convert images to grayscale
-original_gray = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
-adjusted_gray = cv2.cvtColor(adjusted_image, cv2.COLOR_BGR2GRAY)
+mse = np.mean((original_image - adjusted_image) ** 2)
 
-# Calculate histograms
-hist_original = cv2.calcHist([original_gray], [0], None, [256], [0, 256])
-hist_adjusted = cv2.calcHist([adjusted_gray], [0], None, [256], [0, 256])
+# Calculate PSNR
+psnr = 10 * np.log10((255 ** 2) / mse)
 
-# Normalize histograms
-hist_original = cv2.normalize(hist_original, hist_original, norm_type=cv2.NORM_L1)
-hist_adjusted = cv2.normalize(hist_adjusted, hist_adjusted, norm_type=cv2.NORM_L1)
+# Define threshold range
+threshold_low = 30
+threshold_high = 40
 
-# Calculate histogram intersection
-hist_intersection = cv2.compareHist(hist_original, hist_adjusted, cv2.HISTCMP_INTERSECT)
-
-# Print the histogram intersection value
-print('Histogram Intersection:', hist_intersection)
+# Check if PSNR is within the threshold range
+if threshold_low <= psnr <= threshold_high:
+    print(psnr)
+    print('PSNR is closely matched.')
+else:
+    print('PSNR is not within the desired range.')
