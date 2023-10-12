@@ -1,18 +1,24 @@
-import numpy as np
-import cv2 as cv
+import cv2
 
-img = np.zeros([300, 300], dtype=np.uint8)
+def circle_edge_detection(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    wide = cv2.Canny(blurred, 200, 255)
+    w, h, _ = image.shape
+    for x in range(0,h,3):
+        for y in range(0,w,3):
+            edge = wide[y,x]
+            
+            if edge >= 255:
+                cv2.circle(image, (x, y), 60, (0, 255, 0), 1)
 
-center = (150, 150)
-radius = 100
-color = 255
+    cv2.imwrite("output.png", image)
+    cv2.imshow('detected',wide)
+    cv2.imshow('detected circles',image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-for y in range(300):
-    for x in range(300):
-        getRange = (x - center[0]) ** 2 + (y - center[1]) ** 2
-        if getRange <= radius ** 2:
-            img[y, x] = color
 
-cv.imshow('Circle', img)
-cv.waitKey(0)
-cv.destroyAllWindows()
+image_path = "Circle Objects.png"
+img = cv2.imread(image_path)
+circle_edge_detection(img)

@@ -17,7 +17,7 @@ imgPhs = np.arctan2(imgIma, imgReal)
 imgReallnv = imgMag*np.cos(imgPhs)
 imgImalnv = imgMag*np.sin(imgPhs)
 
-imgFlnv = imgReallnv + imgReallnv*1j
+imgFlnv = imgReallnv + imgImalnv*1j
 
 imgFlnv = np.fft.ifftshift(imgFlnv)
 imglnv = np.fft.ifft2(imgFlnv)

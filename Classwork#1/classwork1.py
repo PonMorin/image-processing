@@ -37,6 +37,7 @@ def convolution(img_size):
     # print(filter_size)
     kernels = img_size / (filter_size)
     img_in = cv.imread('Classwork#1/cat.jpeg', cv.IMREAD_GRAYSCALE)
+    cv.imwrite('Classwork#1/greyCat.png', img_in)
     output = cv.filter2D(img_in, -1, kernels, borderType= cv.BORDER_REFLECT)
     return output
 
